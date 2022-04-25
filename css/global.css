@@ -1,0 +1,22 @@
+﻿body {
+    background-color: white;
+    font-family: Calibri;
+    width: 1024px;
+    margin: auto;
+}
+
+h1 {
+    color: black;
+}
+
+h2 {
+    color: plum;
+}
+
+p {
+    color: darkmagenta;
+}
+
+table, th, td {
+    border: 1px solid;
+}
