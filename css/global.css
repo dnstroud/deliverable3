@@ -7,14 +7,18 @@
 
 h1 {
     color: black;
+    font-size: 32px;
 }
 
 h2 {
     color: plum;
+    font-size: 24px;
 }
 
 p {
-    color: darkmagenta;
+    color: rebeccapurple;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 table, th, td {

@@ -117,15 +117,18 @@
         <option value="WV">West Virginia</option>
         <option value="WI">Wisconsin</option>
         <option value="WY">Wyoming</option>
-    </select> 
+    </select>
     <br />
 
     <label for="txtCityInput">Filter by City within State</label>
     <input id="txtCityInput" type="text" />
-    <input type="button" onclick="btnNWSGetStationsAsync_Click()" value="Get Stations" /> 
-    <br />
-    <span id="spnGetStationsStatus"></span>
-    <br /><br />
+    <input type="button" onclick="btnNWSGetStationsAsync_Click()" value="Get Stations" /> <br />
+    <label for="Longtitude">Longitude:</label>
+    <input id="txtLongitude" type="text" /> <br />
+    <label for="Latitude">Latitude:</label>
+    <input id="txtLatitude" type="text" /> <br />
+
+    <p><span id="spnGetStationsStatus"></span></p>
     <h2>Station List</h2>
 
     <div id="divStationsPlaceholder"></div>
