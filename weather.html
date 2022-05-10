@@ -12,16 +12,30 @@
     <script>
 
         let selStates = null;
+        let selCities = null;
         let divStationsPlaceholder = null;
+        let spnGetCitiesStatus = null;
         let spnGetStationsStatus = null;
-        let cityInput = null;
 
         function bodyOnLoad() {
             selstates = document.getElementById("selStates");
+            selcities = document.getElementById("selCities");
             divStationsPlaceholder = document.getElementById("divStationsPlaceholder");
+            spnGetCitiesStatus = document.getElementById("spnGetCitiesStatus");
+            spnGetCitiesStatus.innerHTML = "Cities not loaded."
             spnGetStationsStatus = document.getElementById("spnGetStationsStatus");
             spnGetStationsStatus.innerHTML = "Stations not loaded."
-            cityInput = document.getElementById("txtCityInput");
+        }
+
+        function btnNWSGetCitiesAsync_Click() {
+            var base_uri = "https://w1.weather.gov/xml/current_obs/index.xml";
+            req = new XMLHttpRequest();
+
+            req.open("GET", base_uri, true);
+            req.setRequestHeader("Accept",
+                "text / html, application / xhtml + xml, application / xml; q = 0.9,*/*;q=0.8");
+            req.onreadycitieschange = getCitiesCallback;
+            req.send();
         }
 
         function btnNWSGetStationsAsync_Click() {
@@ -35,10 +49,17 @@
             req.send();
         }
 
+        function getCitiesCallback() {
+            if (this.readyCity == 4 && this.status == 200) {
+                let MyXML = req.responseXML;
+
+                processXML(MyXML);
+                spnGetCitiesStatus.innerHTML = "Cities are loaded."
+            }
+        }
+
         function getStationsCallback() {
             if (this.readyState == 4 && this.status == 200) {
-
-                let MyText = req.responseText;
                 let MyXML = req.responseXML;
 
                 processXML(MyXML);
@@ -46,13 +67,22 @@
             }
         }
 
+        function selCities_onChange() {
+            selcities = document.getElementById("selCities");
+            let city = selCities.value;
+
+            let myList1 = getCities(city);
+
+            displayStationTable(myList1, divStationsPlaceholder);
+        }
+
         function selStates_onChange() {
             selstates = document.getElementById("selStates");
             let stateAbbr = selstates.value;
 
-            let myList = getStations(stateAbbr);
+            let myList2 = getStations(stateAbbr);
 
-            displayStationTable(myList, divStationsPlaceholder);
+            displayStationTable(myList2, divStationsPlaceholder);
         }
     </script>
 </head>
@@ -74,7 +104,7 @@
         <option value="CA">California</option>
         <option value="CO">Colorado</option>
         <option value="CT">Connecticut</option>
-        <option value="DE">Deleware</option>
+        <option value="DE">Delaware</option>
         <option value="FL">Florida</option>
         <option value="GA">Georgia</option>
         <option value="HI">Hawaii</option>
@@ -118,15 +148,21 @@
         <option value="WI">Wisconsin</option>
         <option value="WY">Wyoming</option>
     </select>
+
+    <input type="button" onclick="btnNWSGetCitiesAsync_Click()" value="Get Cities" />
     <br />
 
-    <label for="txtCityInput">Filter by City within State</label>
-    <input id="txtCityInput" type="text" />
-    <input type="button" onclick="btnNWSGetStationsAsync_Click()" value="Get Stations" /> <br />
-    <label for="Longtitude">Longitude:</label>
-    <input id="txtLongitude" type="text" /> <br />
-    <label for="Latitude">Latitude:</label>
-    <input id="txtLatitude" type="text" /> <br />
+    <label for="selCities">Select City within Chosen State</label>
+    <select id="selCities" onchange="selCities_onChange()">
+        <option value="AL">City</option>
+    </select>
+
+    <input type="button" onclick="btnNWSGetStationsAsync_Click()" value="Get Stations" />
+    <br />
+
+    <script>
+        document.write()
+    </script>
 
     <p><span id="spnGetStationsStatus"></span></p>
     <h2>Station List</h2>
